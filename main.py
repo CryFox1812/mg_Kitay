@@ -11,7 +11,8 @@ request = deta.Base('request')
 request_money = deta.Base('request_money')
 
 city = Global.get('Kitay')
-money = city['money'] - ((city['sunks_of_you'] * 50) + (city['sunks_for_you'] * 100))
+# money = city['money'] - ((city['sunks_of_you'] * 50) + (city['sunks_for_you'] * 100))
+money = 1000
 st.set_page_config(
 
     page_title="Мировое господство",
