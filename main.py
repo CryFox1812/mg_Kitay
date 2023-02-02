@@ -197,10 +197,3 @@ if menu == 'Стартовая страница':
         54 + 10 * city['up3'] - (city['debaf3'] * 20)) + '%')
     col4.metric('🏠' + city['shit4'] + 'Гонконг', '⚙️' + str(40 + 10 * city['up4']) + '%' + ' 🌳 ' + str(
         36 + 10 * city['up4'] - (city['debaf4'] * 20)) + '%')
-    photo = deta.Base('Photo_Url')
-    pp = photo.get('bb6a5172diyj')
-    st.image(pp['Graph1'])
-    st.image(pp['Graph2'])
-    st.image(pp['Graph3'])
-    st.image(pp['Graph4'])
-    st.caption('Автор MangoVirus')
