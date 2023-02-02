@@ -13,22 +13,22 @@ request_money = deta.Base('request_money')
 city = Global.get('Kitay')
 
 city.put({
-    'money': 1000,
-    'sunks_of_you': 0,
-    'sunks_for_you': 0,
-    'roket': 0,
-    'shit1': 0,
-    'shit2': 0,
-    'shit3': 0,
-    'shit4': 0,
-    'up1': 0,
-    'up2': 0,
-    'up3': 0,
-    'up4': 0,
-    'debaf1': 0,
-    'debaf2': 0,
-    'debaf3': 0,
-    'debaf4': 0,
+    'money': '1000',
+    'sunks_of_you': '0',
+    'sunks_for_you': '0',
+    'roket': '0',
+    'shit1': '0',
+    'shit2': '0',
+    'shit3': '0',
+    'shit4': '0',
+    'up1': '0',
+    'up2': '0',
+    'up3': '0',
+    'up4': '0',
+    'debaf1': '0',
+    'debaf2': '0',
+    'debaf3': '0',
+    'debaf4': '0',
 })
 db_content = Attak_Kitay.fetch().items
 st.write(db_content)
