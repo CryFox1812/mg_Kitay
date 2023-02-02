@@ -2,6 +2,17 @@ import streamlit as st
 from deta import Deta
 import time
 
+st.set_page_config(
+    page_title="Мировое господство",
+    page_icon="🥭",
+    layout="wide",
+    initial_sidebar_state="collapsed",  # expanded/collapsed
+    menu_items={
+        'Get Help': 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        'Report a bug': "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        'About': "# Автор MangoVirus"
+    })
+
 deta = Deta(st.secrets["deta_key"])
 Global = deta.Base("Global")
 db = deta.Base('Kitay')
@@ -12,39 +23,11 @@ request_money = deta.Base('request_money')
 
 city = Global.get('Kitay')
 
-Global.put({'money': 1000, 
-            'sunks_of_you': 0, 
-            'sunks_for_you': 0, 
-            'roket': 0, 
-            'shit1': 0, 
-            'shit2': 0, 
-            'shit3': 0, 
-            'shit4': 0, 
-            'up1': 0, 
-            'up2': 0, 
-            'up3': 0, 
-            'up4': 0, 
-            'debaf1': 0, 
-            'debaf2': 0, 
-            'debaf3': 0, 
-            'debaf4': 0
-           })
-
 db_content = Attak_Kitay.fetch().items
 st.write(db_content)
 
 money = city['money'] - ((city['sunks_of_you'] * 50) + (city['sunks_for_you'] * 100))
-st.set_page_config(
 
-    page_title="Мировое господство",
-    page_icon="🥭",
-    layout="wide",
-    initial_sidebar_state="collapsed",  # expanded/collapsed
-    menu_items={
-        'Get Help': 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-        'Report a bug': "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        'About': "# Автор MangoVirus"
-    })
 st.sidebar.image('https://cdn.discordapp.com/attachments/890188503047077928/1070451124869533758/066443762463369c.png',
                  width=64)
 menu = st.sidebar.selectbox('Меню',
