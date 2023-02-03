@@ -113,15 +113,15 @@ if menu == 'Улучшения':
     st.write('Деньги:', money)
 
     st.write('Какие города вы хотите улучшить?')
-    for i in range(0, len(enemies_names)):
-        up = st.checkbox(enemies_names[i])
+    for i in range(0, len(current_country.cities)):
+        up = st.checkbox(current_country.cities[i])
         if up:
             masiv_up[i] += 1
             money -= 200
 
     st.write('На какие города установим щиты?')
-    for i in range(0, len(enemies_names)):
-        shit = st.checkbox(enemies_names[i])
+    for i in range(0, len(current_country.cities)):
+        shit = st.checkbox( current_country.cities[i])
         if shit:
             masiv_shit[i] += '🛡️'
             money -= 350
