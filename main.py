@@ -100,7 +100,7 @@ if menu == 'Ракета':
 
     if st.button('Отправить данные'):
         if final_roket >= 0:
-            Attak_Kitay.put({enemies_names[i]: cities_under_attack[i].cities for i in range(0, len(enemies))})
+            Attak_Kitay.put({enemies_names[i]: str(cities_under_attack[i].cities) for i in range(0, len(enemies))})
             db_content = Attak_Kitay.fetch().items
             st.write(db_content)
             with st.spinner('Wait for it...'):
