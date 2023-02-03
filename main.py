@@ -45,6 +45,7 @@ all_countries = [
 
 # UNIQUE PARAMETERS
 
+current_country_name_eng = 'Kitay'
 current_country = all_countries[0]  # Китай
 enemies = [x for x in all_countries if x != current_country]  # Страны-оппоненты с городами
 enemies_names = [x.name for x in enemies]  # Страны-оппоненты
@@ -53,12 +54,12 @@ enemies_names = [x.name for x in enemies]  # Страны-оппоненты
 
 deta = Deta(st.secrets['deta_key'])
 Global = deta.Base('Global')
-db = deta.Base(current_country.name)
-Attak_Kitay = deta.Base('Attak_' + current_country.name)
+db = deta.Base(current_country_name_eng)
+Attak_Kitay = deta.Base('Attak_' + current_country_name_eng)
 Graph = deta.Base('Photo_Url')
 request = deta.Base('request')
 request_money = deta.Base('request_money')
-city = Global.get(current_country.name)
+city = Global.get(current_country_name_eng)
 
 money = city['money'] - ((city['sunks_of_you'] * sanctions_from_you_cost) +
                          (city['sunks_for_you'] * sanctions_for_you_cost))
