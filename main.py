@@ -121,7 +121,7 @@ if menu == 'Улучшения':
 
     st.write('На какие города установим щиты?')
     for i in range(0, len(current_country.cities)):
-        shit = st.checkbox( current_country.cities[i])
+        shit = st.checkbox(current_country.cities[i] + ' ')
         if shit:
             masiv_shit[i] += '🛡️'
             money -= 350
