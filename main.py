@@ -3,17 +3,15 @@ from deta import Deta
 import time
 
 st.set_page_config(
-    page_title="Мировое господство",
-    page_icon="🥭",
-    layout="wide",
-    initial_sidebar_state="collapsed",  # expanded/collapsed
+    page_title='Мировое господство',
+    page_icon='🥭',
+    layout='wide',
+    initial_sidebar_state='collapsed',  # expanded/collapsed
     menu_items={
         'Get Help': 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-        'Report a bug': "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        'About': "# Автор MangoVirus"
+        'Report a bug': 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        'About': '# Автор MangoVirus'
     })
-
-# GLOBAL CONSTANTS
 
 
 class Country:
@@ -21,6 +19,20 @@ class Country:
         self.name = name
         self.cities = cities
 
+
+# GAME SETTINGS
+
+basic_development = [60, 50, 50, 40]
+basic_ecology = [72, 54, 54, 36]
+up_multiplier = 10
+debaf_multiplier = 20
+
+sanctions_from_you_cost = 50
+sanctions_for_you_cost = 100
+
+improving_city_cost = 200
+building_shield_cost = 350
+building_rocket_cost = 500
 
 all_countries = [
     Country('Китай', ['Пекин', 'Шанхай', 'Гуанчжоу', 'Гонконг']),
@@ -30,34 +42,31 @@ all_countries = [
     Country('Афганистан', ['Кабул', 'Герат', 'Кандагар', 'Кундуз']),
     Country('Сирия', ['Аллепо', 'Дамаск', 'Хама', 'Африн']),
 ]
+
+# UNIQUE PARAMETERS
+
 current_country = all_countries[0]  # Китай
 enemies = [x for x in all_countries if x != current_country]  # Страны-оппоненты с городами
 enemies_names = [x.name for x in enemies]  # Страны-оппоненты
 
-# LOCAL CONSTANTS
-
-# LOCAL DATA
-
 #
 
-deta = Deta(st.secrets["deta_key"])
-Global = deta.Base("Global")
-db = deta.Base('Kitay')
-Attak_Kitay = deta.Base('Attak_Kitay')
+deta = Deta(st.secrets['deta_key'])
+Global = deta.Base('Global')
+db = deta.Base(current_country.name)
+Attak_Kitay = deta.Base('Attak_' + current_country.name)
 Graph = deta.Base('Photo_Url')
 request = deta.Base('request')
 request_money = deta.Base('request_money')
-city = Global.get('Kitay')
+city = Global.get(current_country.name)
 
-money = city['money'] - ((city['sunks_of_you'] * 50) + (city['sunks_for_you'] * 100))
+money = city['money'] - ((city['sunks_of_you'] * sanctions_from_you_cost) +
+                         (city['sunks_for_you'] * sanctions_for_you_cost))
 
 st.sidebar.image('https://cdn.discordapp.com/attachments/890188503047077928/1070451124869533758/066443762463369c.png',
                  width=64)
 menu = st.sidebar.selectbox('Меню',
                             ('Стартовая страница', 'Улучшения', 'Ракета', 'Посещения', 'Гуманитарная помощь', 'Авторы'))
-
-masiv_up = [0, 0, 0, 0]
-masiv_shit = [' ', ' ', ' ', ' ']
 
 if menu == 'Авторы':
     '''# Над данным проектом работали'''
@@ -110,6 +119,9 @@ if menu == 'Ракета':
             st.error('Вы выпустили больше ракет чем у вас есть...')
 
 if menu == 'Улучшения':
+    masiv_up = [0] * len(current_country.cities)
+    masiv_shit = [' '] * len(current_country.cities)
+
     st.write('Деньги:', money)
 
     st.write('Какие города вы хотите улучшить?')
@@ -117,34 +129,37 @@ if menu == 'Улучшения':
         up = st.checkbox(current_country.cities[i])
         if up:
             masiv_up[i] += 1
-            money -= 200
+            money -= improving_city_cost
 
     st.write('На какие города установим щиты?')
     for i in range(0, len(current_country.cities)):
         shit = st.checkbox(current_country.cities[i] + ' ')
         if shit:
             masiv_shit[i] += '🛡️'
-            money -= 350
+            money -= building_shield_cost
 
     number = st.number_input('Сколько ракет делаем?', 0)
     st.write('Вы получите в следующие количество ракет', number)
-    money -= 500 * number
+    money -= building_rocket_cost * number
 
     sunks_for_who = st.multiselect('На какие страны вы хотите наложить санкции?', enemies_names)
-    money -= 50 * len(sunks_for_who)
+    money -= sanctions_for_you_cost * len(sunks_for_who)
 
     st.write('Ваш баланс после операции:', money)
 
     for i in range(0, len(current_country.cities)):
+        current_up = masiv_up[i] * up_multiplier
+        previous_up = city['up' + str(i + 1)] * up_multiplier + current_up
+        previous_debaf = city['debaf' + str(i + 1)] * debaf_multiplier
         st.metric('🏠' + city['shit' + str(i + 1)] + masiv_shit[i] + current_country.cities[i],
-                  '⚙️' + str(60 + 10 * city['up' + str(i + 1)] + 10 * masiv_up[i]) + '%' +
-                  ' 🌳 ' + str(72 + (10 * city['up' + str(i + 1)] + 10 * masiv_up[i]) - (city['debaf' + str(i + 1)] * 20)) + '%',
-                  masiv_up[i] * 10)
+                  '⚙️' + str(basic_development[i] + previous_up) + '% ' +
+                  '🌳' + str(basic_ecology[i] + previous_up - previous_debaf) + '%',
+                  current_up)
 
     if st.button('Отправить данные'):
         if money >= 0:
-            db.put({"money": money, "roket": number, "shit": str(masiv_shit), "up": str(masiv_up),
-                    'sunks_for_who': str(sunks_for_who)})
+            db.put({'money': money, 'roket': number, 'shit': str(masiv_shit),
+                    'up': str(masiv_up), 'sunks_for_who': str(sunks_for_who)})
             db_content = db.fetch().items
             st.write(db_content)
             with st.spinner('Wait for it...'):
@@ -162,6 +177,8 @@ if menu == 'Стартовая страница':
     st.write('Санкции наложеные на вас:', city['sunks_for_you'])
 
     for i in range(0, len(current_country.cities)):
+        previous_up = city['up' + str(i + 1)] * up_multiplier
+        previous_debaf = city['debaf' + str(i + 1)] * debaf_multiplier
         st.metric('🏠' + city['shit' + str(i + 1)] + current_country.cities[i],
-                  '⚙️' + str(60 + 10 * city['up' + str(i + 1)]) + '%' +
-                  ' 🌳 ' + str(72 + 10 * city['up' + str(i + 1)] - (city['debaf' + str(i + 1)] * 20)) + '%')
+                  '⚙️' + str(basic_development[i] + previous_up) + '% ' +
+                  '🌳' + str(basic_ecology[i] + previous_up - previous_debaf) + '%')
