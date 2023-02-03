@@ -135,8 +135,8 @@ if menu == 'Улучшения':
 
     st.write('Ваш баланс после операции:', money)
 
-    for i in range(0, len(enemies_names)):
-        st.metric('🏠' + city['shit' + str(i + 1)] + masiv_shit[i] + enemies_names[i],
+    for i in range(0, len(current_country.cities)):
+        st.metric('🏠' + city['shit' + str(i + 1)] + masiv_shit[i] + current_country.cities[i],
                   '⚙️' + str(60 + 10 * city['up' + str(i + 1)] + 10 * masiv_up[i]) + '%' +
                   ' 🌳 ' + str(72 + (10 * city['up' + str(i + 1)] + 10 * masiv_up[i]) - (city['debaf' + str(i + 1)] * 20)) + '%',
                   masiv_up[i] * 10)
@@ -161,7 +161,7 @@ if menu == 'Стартовая страница':
     st.write('Санкции наложеные вами:', city['sunks_of_you'])
     st.write('Санкции наложеные на вас:', city['sunks_for_you'])
 
-    for i in range(0, len(enemies_names)):
-        st.metric('🏠' + city['shit' + str(i + 1)] + enemies_names[i],
+    for i in range(0, len(current_country.cities)):
+        st.metric('🏠' + city['shit' + str(i + 1)] + current_country.cities[i],
                   '⚙️' + str(60 + 10 * city['up' + str(i + 1)]) + '%' +
                   ' 🌳 ' + str(72 + 10 * city['up' + str(i + 1)] - (city['debaf' + str(i + 1)] * 20)) + '%')
