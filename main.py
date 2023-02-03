@@ -50,7 +50,7 @@ if menu == 'Авторы':
 if menu == 'Гуманитарная помощь':
     st.write('Деньги:', money)
     visit_money = st.selectbox('Кому вы хотите перевести деньги?',
-                               ('Япония', 'Северная Корея', 'Пакистан', 'Афганистан', 'Сирия'))
+                               (['Япония', 'Северная Корея', 'Пакистан', 'Афганистан', 'Сирия']))
     how_money = st.number_input('Сумма перевода?', 0)
     if st.button('Перевести'):
         request_money.put({'who': 'Kitay', 'come': visit_money, 'price': how_money})
