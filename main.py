@@ -144,7 +144,7 @@ if menu == 'Улучшения':
     money -= building_rocket_cost * number
 
     sunks_for_who = st.multiselect('На какие страны вы хотите наложить санкции?', enemies_names)
-    money -= sanctions_for_you_cost * len(sunks_for_who)
+    money -= sanctions_from_you_cost * len(sunks_for_who)
 
     st.write('Ваш баланс после операции:', money)
 
