@@ -177,9 +177,10 @@ if menu == 'Стартовая страница':
     st.write('Санкции наложеные вами:', city['sunks_of_you'])
     st.write('Санкции наложеные на вас:', city['sunks_for_you'])
 
+    lst = st.columns(len(current_country.cities))
     for i in range(0, len(current_country.cities)):
         previous_up = city['up' + str(i + 1)] * up_multiplier
         previous_debaf = city['debaf' + str(i + 1)] * debaf_multiplier
-        st.metric('🏠' + city['shit' + str(i + 1)] + current_country.cities[i],
+        lst[i].metric('🏠' + city['shit' + str(i + 1)] + current_country.cities[i],
                   '⚙️' + str(basic_development[i] + previous_up) + '% ' +
-                  '🌳' + str(basic_ecology[i] + previous_up - previous_debaf) + '%4345435')
+                  '🌳' + str(basic_ecology[i] + previous_up - previous_debaf) + '%')
