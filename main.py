@@ -182,4 +182,4 @@ if menu == 'Стартовая страница':
         previous_debaf = city['debaf' + str(i + 1)] * debaf_multiplier
         st.metric('🏠' + city['shit' + str(i + 1)] + current_country.cities[i],
                   '⚙️' + str(basic_development[i] + previous_up) + '% ' +
-                  '🌳' + str(basic_ecology[i] + previous_up - previous_debaf) + '%')
+                  '🌳' + str(basic_ecology[i] + previous_up - previous_debaf) + '%4345435')
